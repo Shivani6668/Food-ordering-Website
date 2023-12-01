@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Logo from "../Images/Logo.jpg";
+import { Link } from "react-router-dom";
 
 const Title = () => (
   <a href="/">
@@ -10,14 +11,20 @@ const Title = () => (
 const Header = () => {
   const [login, setLogin] = useState("Login");
 
+  console.log("header ");
+useEffect(()=>{
+  console.log("useeffect");
+},[login])
+
+
   return (
     <div className="header">
       <Title />
       <div className="nav-items">
         <ul>
-          <li>Home</li>
-          <li>About</li>
-          <li>Contact</li>
+        <Link className="li" to="/"><li>Home</li></Link>
+          <Link className="li" to="/about"><li>About</li></Link>
+          <Link className="li" to="/contact"><li>Contact</li></Link>
           <button
             onClick={() => {
               login === "Login" ? setLogin("LogOut") : setLogin("Login");
