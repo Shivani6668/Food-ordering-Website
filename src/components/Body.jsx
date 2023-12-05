@@ -1,59 +1,24 @@
-import RestaurantCard from "./RestaurantCard";
-import { useEffect, useState } from "react"; 
-import Shimmer from "./Shimmer"; 
+import RestaurantCard, { withPromated } from "./RestaurantCard";
+import { useEffect, useState } from "react";
+import Shimmer from "./Shimmer";
 import { swiggy_api_URL } from "../utils/contants";
+import { Link } from "react-router-dom";
+import useResData from "../utils/Hooks/useResData";
 
-// Body Component for body section: It contain all restaurant cards
 const Body = () => {
-  // useState: To create a state variable, searchText, allRestaurants and filteredRestaurants is local state variable
   const [searchText, setSearchText] = useState("");
-  const [allRestaurants, setAllRestaurants] = useState([]);
-  const [filteredRestaurants, setFilteredRestaurants] = useState([]);
+  const [allRestaurants, FilterRes] = useResData(swiggy_api_URL);
+  const [filteredRestaurants, setFilteredRestaurants] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
 
-  useEffect(() => {
-    getRestaurants();
-  }, []);
+  const RestaurantCardPromoted = withPromated(RestaurantCard);
 
-  async function getRestaurants() {
-    // handle the error using try... catch
-    try {
-      const response = await fetch(swiggy_api_URL);
-      const json = await response.json();
-
-      // initialize checkJsonData() function to check Swiggy Restaurant data
-      async function checkJsonData(jsonData) {
-        for (let i = 0; i < jsonData?.data?.cards.length; i++) {
-
-          // initialize checkData for Swiggy Restaurant data
-          let checkData = json?.data?.cards[i]?.card?.card?.gridElements?.infoWithStyle?.restaurants;
-
-          // if checkData is not undefined then return it
-          if (checkData !== undefined) {
-            return checkData;
-          }
-        }
-      }
-
-      // call the checkJsonData() function which return Swiggy Restaurant data
-      const resData = await checkJsonData(json);
-
-      // update the state variable restaurants with Swiggy API data
-      setAllRestaurants(resData);
-      setFilteredRestaurants(resData);
-    } catch (error) {
-      console.log(error);
-    }
+  function filterData(searchText, restaurants) {
+    const resFilterData = restaurants.filter((restaurant) =>
+      restaurant?.info?.name.toLowerCase().includes(searchText.toLowerCase())
+    );
+    return resFilterData;
   }
-
-
-function filterData(searchText, restaurants) {
-  const resFilterData = restaurants.filter((restaurant) =>
-    restaurant?.info?.name.toLowerCase().includes(searchText.toLowerCase())
-  );
-  return resFilterData;
-}
-
 
   const searchData = (searchText, restaurants) => {
     if (searchText !== "") {
@@ -80,7 +45,7 @@ function filterData(searchText, restaurants) {
           placeholder="Search a restaurant you want..."
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
-          onKeyDown={()=> searchData(searchText, allRestaurants)}
+          onKeyDown={() => searchData(searchText, allRestaurants)}
         ></input>
         <button
           className="search-btn"
@@ -97,11 +62,22 @@ function filterData(searchText, restaurants) {
         <Shimmer />
       ) : (
         <div className="restaurant-list">
-          {filteredRestaurants.map((restaurant) => {
-            return (
-              <RestaurantCard key={restaurant?.info?.id} {...restaurant?.info} />
-            );
-          })}
+          {(filteredRestaurants === null ? FilterRes : filteredRestaurants).map(
+            (restaurant) => {
+              return (
+                <Link
+                  to={"/restaurant/" + restaurant?.info?.id}
+                  key={restaurant?.info?.id}
+                >
+                  {restaurant.info.promoted ? (
+                    <RestaurantCardPromoted {...restaurant?.info} />
+                  ) : (
+                    <RestaurantCard {...restaurant?.info} />
+                  )}
+                             </Link>
+              );
+            }
+          )}
         </div>
       )}
     </>
