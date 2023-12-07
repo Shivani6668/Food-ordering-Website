@@ -2,6 +2,10 @@ import { useContext, useEffect, useState } from "react";
 import Logo from "../Images/Logo.jpg";
 import { Link } from "react-router-dom";
 import UserContext from "../utils/UserContext"
+import { BsBagPlusFill } from "react-icons/bs";
+import { useSelector } from "react-redux";
+
+
 
 const Title = () => (
   <a href="/">
@@ -14,7 +18,11 @@ const Header = () => {
 
 
 const {loggedInUser} = useContext(UserContext)
-console.log(loggedInUser);
+// console.log(loggedInUser);
+
+// subscribing to the  store using a selector
+const cartItems = useSelector((store)=>store.cart.items)
+// console.log(cartItems);
 
 return (
     <div className="header">
@@ -22,6 +30,7 @@ return (
       <div className="nav-items">
         <ul>
 {/* <li>{loggedInUser}</li> */}
+
 
           <li>
         <Link  to="/">Home</Link>
@@ -41,7 +50,10 @@ return (
             <li>{login}</li>
           </button>
           <li>
-            <i className="fa-solid fa-cart-shopping"></i>
+          <Link to="/cart"> <i className="fa-solid fa-cart-shopping">Cart: ({cartItems.length} item)</i>
+           </Link>
+            
+
           </li>
         </ul>
       </div>

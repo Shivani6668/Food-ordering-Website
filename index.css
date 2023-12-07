@@ -840,3 +840,19 @@ to {
 }
 
 /* Error page CSS End */
+
+
+
+/* cart page */
+
+.cart{
+  width: 50%;
+  margin-top: 100px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+.item{
+  align-items: center;
+
+}

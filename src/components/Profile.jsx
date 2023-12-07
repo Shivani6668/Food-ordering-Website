@@ -14,6 +14,8 @@ function Profile() {
     fetchData();
   }, []);
 
+  // console.log(userInfo.bio);
+
   return (
     <>
       <div className="profile-class-container">

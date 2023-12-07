@@ -9,6 +9,8 @@ import {
 } from "../utils/contants"
 import {MenuShimmer} from "./Shimmer";
 import useResMenuData from "../utils/Hooks/useResMenuData";
+import { useDispatch } from "react-redux";
+import { addItem } from "../utils/slice/cartSlice";
 
 const RestaurantMenu = () => {
  
@@ -20,6 +22,15 @@ const RestaurantMenu = () => {
     MENU_ITEM_TYPE_KEY
   );
 
+const dispatch = useDispatch()
+
+const handlerAddItem = (item)=>{
+  //dispatch and action
+dispatch(addItem(item))
+
+
+
+}
 
   return !restaurant ? (
     <MenuShimmer />
@@ -84,7 +95,7 @@ const RestaurantMenu = () => {
                       alt={item?.name}
                     />
                   )}
-                  <button className="add-btn"> ADD +</button>
+                  <button className="add-btn" onClick={ () => handlerAddItem(item)}> ADD +</button>
                 </div>
               </div>
             ))}

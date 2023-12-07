@@ -9,16 +9,21 @@ import Error from "../src/components/Error";
 import RestaurantMenu from "../src/components/RestaurantMenu"
 import Profile from "./components/Profile";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom"; 
-
+import { Provider } from "react-redux";
+import appStore from "./utils/appStore";
+import Cart from "./components/Cart";
+// lazy loading/dynamic bundling
 const About = lazy(()=> import("../src/components/About"))
-
+ 
 const AppLayout = () => {
   return (
-    <React.Fragment>
+   <Provider store={appStore}>
+   <>
       <Header/>
        <Outlet/>
       <Footer />
-    </React.Fragment>
+      </>
+      </Provider>
   );
 };
 
@@ -47,6 +52,10 @@ const appRouter = createBrowserRouter([
        {
         path: "/restaurant/:resId",
         element: <RestaurantMenu/>
+       },
+       {
+        path: "/cart",
+        element: <Cart/>
        },
     ],
     errorElement:<Error/>

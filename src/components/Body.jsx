@@ -43,9 +43,10 @@ const Body = () => {
           type="text"
           className="search-input"
           placeholder="Search a restaurant you want..."
-          value={searchText}
-          onChange={(e) => setSearchText(e.target.value)}
-          onKeyDown={() => searchData(searchText, allRestaurants)}
+         
+          // onChange={(e) => setSearchText(e.target.value)}
+          onChange={(e) => searchData(e.target.value, allRestaurants)}
+
         ></input>
         <button
           className="search-btn"
