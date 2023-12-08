@@ -26,11 +26,9 @@ const dispatch = useDispatch()
 
 const handlerAddItem = (item)=>{
   //dispatch and action
-dispatch(addItem(item))
+   dispatch(addItem(item))
 
-
-
-}
+ }
 
   return !restaurant ? (
     <MenuShimmer />

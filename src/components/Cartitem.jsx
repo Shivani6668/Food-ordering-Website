@@ -1,3 +1,5 @@
+import { useDispatch } from "react-redux"
+import {clearCart} from "../utils/slice/cartSlice"
 import {
     swiggy_menu_api_URL,
     IMG_CDN_URL,
@@ -5,11 +7,24 @@ import {
     MENU_ITEM_TYPE_KEY,
     RESTAURANT_TYPE_KEY,
   } from "../utils/contants"
-const Cartitem = ({item}) =>{
+
+  const Cartitem = ({item}) =>{
+
+  const dispatch = useDispatch()
+  const handleClearCart = () =>{
+dispatch(clearCart() )
+  }
 return(
     <>
     <div className="cart">
+     
         <div className="item">
+       
+
+        <button className="button" onClick={handleClearCart}>Clear Cart</button>
+ 
+        {item.length === 0 && <h1>Cart Empty. Add Items to the Cart</h1>}
+ 
         {item.map((data)=>(
             <div className="menu-item" key={data?.id}>
                 <div className="menu-item-details">
@@ -33,7 +48,10 @@ return(
                       alt={data?.name}
                     />
                   )}
+
+
                 </div>
+
               </div>
 ))}
 
