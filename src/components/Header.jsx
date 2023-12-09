@@ -2,8 +2,8 @@ import { useContext, useEffect, useState } from "react";
 import Logo from "../Images/Logo.jpg";
 import { Link } from "react-router-dom";
 import UserContext from "../utils/UserContext"
-import { BsBagPlusFill } from "react-icons/bs";
 import { useSelector } from "react-redux";
+import { ImCart } from "react-icons/im";
 
 
 
@@ -50,9 +50,9 @@ return (
             <li>{login}</li>
           </button></li>
           <li>
-          <Link to="/cart"> <i className="fa-solid fa-cart-shopping">Cart: ({cartItems.length} item)</i>
-           </Link>
+          
             
+<Link to="/cart">{cartItems.length} <ImCart/></Link>
 
           </li>
         </ul>

@@ -891,11 +891,8 @@ td input {
   padding: 5px;
 }
 
-.btn {
-
-  width: 40px;
-  height: 30px;
-  padding: 5px;
+.remove {
+cursor: pointer;
 }
 
 td a {

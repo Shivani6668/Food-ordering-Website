@@ -9,6 +9,7 @@ import {
 } from "../utils/contants";
 import { useEffect, useState } from "react";
 import toast from 'react-hot-toast';
+import { FaPlus, FaMinus } from "react-icons/fa6";
 
 
 const Cartitem = ({ item }) => {
@@ -94,14 +95,14 @@ quantity()
             <p>{data?.name}</p>
             <small>Price ₹{data?.price/100}</small>
             <br />
-            <a onClick={()=> remove(data.id)}>Remove</a>
+            <a className="remove" onClick={()=> remove(data.id)}>Remove</a>
           </div>
         </div>
       </td>
       <td> 
-        <button classNameName="btn" onClick={ data.qnty <1 ? remove(data.id) :()=> dechandler(data)}>-</button>
-        <input type="text" value={data?.qnty} />
-        <button classNameName="btn" onClick={()=> inchandler(data)}>+</button>
+     <FaMinus className="remove" onClick={ data.qnty <1 ? remove(data.id) :()=> dechandler(data)}/>
+        <input type="text" value={data?.qnty} disabled />
+        <FaPlus className="remove" onClick={()=> inchandler(data)}/>
         </td>
       <td>₹{data?.qnty *  data?.price/100 }</td>
     </tr>

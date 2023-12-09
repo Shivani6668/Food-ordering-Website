@@ -1,12 +1,7 @@
-import { useState } from "react";
 import contact from "../Images/Contact-Us.png";
 
 const Contact = () => {
-  const [message, setMessage] = useState(false);
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        setMessage(true);
-    }
+  
   return (
     <div className="contact-container">
       <div className="contact-left">
@@ -14,12 +9,11 @@ const Contact = () => {
       </div>
       <div className="contact-right">
       <h1>Contact us</h1>
-                <form onSubmit={handleSubmit}>
-                <input type="text" placeholder="Name" required/>
-                    <input type="email" placeholder="Email" required/>
-                    <textarea placeholder="Type your Message here..." required></textarea>
+                <form  method="POST" action="https://formspree.io/f/xwkdgnrq">
+                <input type="text" placeholder="Name" required name="username"/>
+                    <input type="email" placeholder="Email" name="email" required/>
+                    <textarea placeholder="Type your Message here..." name="message" required></textarea>
                     <button type="submit">Submit</button>
-                    {message && <span>Thanks for contacting FoodFire, We will reply ASAP.</span>}
                 </form>
       </div>
     </div>
