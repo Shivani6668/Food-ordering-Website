@@ -1,64 +1,140 @@
-import { useDispatch } from "react-redux"
-import {clearCart} from "../utils/slice/cartSlice"
+import { useDispatch } from "react-redux";
+import { addItem, clearCart, removeItem, removeSingle } from "../utils/slice/cartSlice";
 import {
-    swiggy_menu_api_URL,
-    IMG_CDN_URL,
-    ITEM_IMG_CDN_URL,
-    MENU_ITEM_TYPE_KEY,
-    RESTAURANT_TYPE_KEY,
-  } from "../utils/contants"
+  swiggy_menu_api_URL,
+  IMG_CDN_URL,
+  ITEM_IMG_CDN_URL,
+  MENU_ITEM_TYPE_KEY,
+  RESTAURANT_TYPE_KEY,
+} from "../utils/contants";
+import { useEffect, useState } from "react";
+import toast from 'react-hot-toast';
 
-  const Cartitem = ({item}) =>{
 
-  const dispatch = useDispatch()
-  const handleClearCart = () =>{
-dispatch(clearCart() )
+const Cartitem = ({ item }) => {
+  const dispatch = useDispatch();
+  const [totalprice,setTotalprice] = useState(0)
+ const [totalqnty,setTotalqnty] = useState(0)
+
+  const handleClearCart = () => {
+    dispatch(clearCart());
+    toast.success("Your Cart is Empty")
+  };
+
+  const inchandler = (e) => {
+    dispatch(addItem(e));
+  };
+
+  const dechandler=(e)=>{
+    dispatch(removeSingle(e))
+    
   }
-return(
-    <>
-    <div className="cart">
-     
-        <div className="item">
-       
 
-        <button className="button" onClick={handleClearCart}>Clear Cart</button>
+  const remove = (e) =>{
+dispatch(removeItem(e))
+toast.success("Item Remove from your Cart")
+  }
+
+  // count total price
+const total = ()=>{
+  let totalprice = 0
+  item.map((ele,ind)=>{
+    totalprice = ele.price * ele.qnty + totalprice
+  })
+  setTotalprice(totalprice)
+}
+
+useEffect(()=>{
+total()
+},[total])
+
+// count total item
+const quantity = () =>{
+  let totalqnty = 0
+  item.map((ele,ind)=>{
+    totalqnty = ele.qnty + totalqnty
+  })
+  setTotalqnty(totalqnty)
+}
+
+useEffect(()=>{
+quantity()
+},[quantity])
+  return (
+    <>
+<div className="small-container cart-page">
  
-        {item.length === 0 && <h1>Cart Empty. Add Items to the Cart</h1>}
+  <table>
+    <tr>
+      <th>Product</th>
+      <th>Quantity</th>
+      <th>Subtotal
+
+        <button onClick={handleClearCart}>Empty Cart</button>
+      </th>
+    </tr>  
+  
  
-        {item.map((data)=>(
-            <div className="menu-item" key={data?.id}>
-                <div className="menu-item-details">
-                  <h3 className="item-title">{data?.name}</h3>
-                  <p className="item-cost">
-                    {data?.price > 0
-                      ? new Intl.NumberFormat("en-IN", {
-                          style: "currency",
-                          currency: "INR",
-                        }).format(data?.price / 100)
-                      : " "}
-                  </p>
-                
-                  <p className="item-desc">{data?.description}</p>
-                </div>
-                <div className="menu-img-wrapper">
-                  {data?.imageId && (
+{item.length === 0 && <h1>Cart Empty. Add Items to the Cart</h1>}
+  
+  {item.map((data)=>(
+    <tr key={data?.id}>
+      <td>
+        <div className="cart-info">
+         
+          {data?.imageId && (
                     <img
-                      className="menu-item-img"
+                      classNameName="menu-item-img"
                       src={ITEM_IMG_CDN_URL + data?.imageId}
                       alt={data?.name}
                     />
+                    
                   )}
-
-
-                </div>
-
-              </div>
-))}
-
+          <div>
+            <p>{data?.name}</p>
+            <small>Price ₹{data?.price/100}</small>
+            <br />
+            <a onClick={()=> remove(data.id)}>Remove</a>
+          </div>
         </div>
-     
-    </div>
+      </td>
+      <td> 
+        <button classNameName="btn" onClick={ data.qnty <1 ? remove(data.id) :()=> dechandler(data)}>-</button>
+        <input type="text" value={data?.qnty} />
+        <button classNameName="btn" onClick={()=> inchandler(data)}>+</button>
+        </td>
+      <td>₹{data?.qnty *  data?.price/100 }</td>
+    </tr>
+  ))}
+    
+    
+    
+      </table>
+
+  <div className="total-price">
+    <table>
+      <tr>
+        <td>Total Item</td>
+        <td>{totalqnty}</td>
+      </tr>
+            <tr>
+        <td>Total Amount</td>
+        <td>₹{totalprice/100}</td>
+      </tr>
+    
+      
+    </table>
+  </div>
+</div>
+
+
+
+
+
+ 
+
+
     </>
-)    
-}
-export default Cartitem
+  );
+};
+export default Cartitem;

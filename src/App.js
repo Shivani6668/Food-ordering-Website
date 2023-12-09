@@ -12,6 +12,9 @@ import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import { Provider } from "react-redux";
 import appStore from "./utils/appStore";
 import Cart from "./components/Cart";
+import toast, { Toaster } from 'react-hot-toast';
+
+
 // lazy loading/dynamic bundling
 const About = lazy(()=> import("../src/components/About"))
  
@@ -21,6 +24,7 @@ const AppLayout = () => {
    <>
       <Header/>
        <Outlet/>
+       <Toaster/>
       <Footer />
       </>
       </Provider>

@@ -41,14 +41,14 @@ return (
           <li>
           <Link to="/contact">Contact</Link>
           </li>
-          <button
+        <li>  <button 
             onClick={() => {
               login === "Login" ? setLogin("LogOut") : setLogin("Login");
             }}
             className="login-btn"
           >
             <li>{login}</li>
-          </button>
+          </button></li>
           <li>
           <Link to="/cart"> <i className="fa-solid fa-cart-shopping">Cart: ({cartItems.length} item)</i>
            </Link>

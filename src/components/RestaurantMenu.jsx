@@ -11,6 +11,9 @@ import {MenuShimmer} from "./Shimmer";
 import useResMenuData from "../utils/Hooks/useResMenuData";
 import { useDispatch } from "react-redux";
 import { addItem } from "../utils/slice/cartSlice";
+import toast from 'react-hot-toast';
+
+
 
 const RestaurantMenu = () => {
  
@@ -22,14 +25,16 @@ const RestaurantMenu = () => {
     MENU_ITEM_TYPE_KEY
   );
 
+
 const dispatch = useDispatch()
 
 const handlerAddItem = (item)=>{
   //dispatch and action
    dispatch(addItem(item))
-
+   toast.success("Item added in Your Cart")
  }
 
+ 
   return !restaurant ? (
     <MenuShimmer />
   ) : (
@@ -76,12 +81,7 @@ const handlerAddItem = (item)=>{
                 <div className="menu-item-details">
                   <h3 className="item-title">{item?.name}</h3>
                   <p className="item-cost">
-                    {item?.price > 0
-                      ? new Intl.NumberFormat("en-IN", {
-                          style: "currency",
-                          currency: "INR",
-                        }).format(item?.price / 100)
-                      : " "}
+                  ₹{item?.price/100}
                   </p>
                   <p className="item-desc">{item?.description}</p>
                 </div>
@@ -93,6 +93,7 @@ const handlerAddItem = (item)=>{
                       alt={item?.name}
                     />
                   )}
+
                   <button className="add-btn" onClick={ () => handlerAddItem(item)}> ADD +</button>
                 </div>
               </div>

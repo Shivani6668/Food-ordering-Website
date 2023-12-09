@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { SiGmail, SiLinkedin, SiGithub, SiTwitter } from "react-icons/si";
-import { Github_API, Linkedin_Link } from "../utils/contants";
+import { Github_API, Linkedin_Link,Github_Link,Email_Link } from "../utils/contants";
 
 function Profile() {
   const [userInfo, setUserInfo] = useState([]);
@@ -47,7 +47,7 @@ function Profile() {
               </a>
 
               <a
-                href=""
+                href={Github_Link}
                 title="Follow me on Github"
                 className="icon-button github"
                 target="_blank"
@@ -58,7 +58,7 @@ function Profile() {
                 </i>
               </a>
               <a
-                href=""
+                href={Email_Link}
                 title="Any Query! Mail me"
                 className="icon-button email"
                 target="_blank"

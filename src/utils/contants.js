@@ -25,7 +25,7 @@ export const Github_API = "https://api.github.com/users/shivani6668";
 
 // Social Media Links
 export const Linkedin_Link = "https://www.linkedin.com/in/shivani6668/";
-export const Github_Link = "https://api.github.com/users/shivani6668";
+export const Github_Link = "https://github.com/Shivani6668";
 export const Email_Link = "shiwaniparmar@outlook.com";
 
 
